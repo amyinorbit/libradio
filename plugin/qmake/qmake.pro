@@ -89,6 +89,8 @@ linux-g++-64 {
 macx {
 	DEFINES += APL=1 IBM=0 LIN=0
 	QMAKE_CFLAGS += -mmacosx-version-min=10.9
+    QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+	QMAKE_MACOSX_DEPLOYMENT_TARGET=10.13
 }
 
 macx-clang {
