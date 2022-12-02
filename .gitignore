@@ -11,7 +11,14 @@ src/java/doc
 
 src/dll/distort.dll
 
-plugin/qmake/Makefile.Debug
-plugin/qmake/Makefile.Release
-plugin/qmake/debug/
-plugin/qmake/libradio.plugin
+plugin/liblibradio.xpl.dll.a
+plugin/cmake_install.cmake
+plugin/Makefile
+plugin/CMakeFiles
+plugin/CMakeCache.txt
+plugin/libradio.plugin
+plugin/notarize/user.make
+plugin/notarize/AuditInfo.json
+plugin/notarize/ExportOptions.plist
+plugin/notarize/RequestInfo.plist
+plugin/notarize/UploadInfo.plist
