@@ -213,6 +213,9 @@ XPluginDisable(void)
 {
 	snd_sys_fini();
 	navrad_worker_stop();
+#if	LIBRADIO_OPENGPWS_CTL
+	egpws_intf->set_state(NULL);
+#endif	/* LIBRADIO_OPENGPWS_CTL */
 }
 
 PLUGIN_API void
