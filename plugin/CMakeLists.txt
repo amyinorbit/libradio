@@ -13,7 +13,7 @@
 
 # Copyright 2022 Saso Kiselkov. All rights reserved.
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 
 project(libradio)
 
@@ -195,6 +195,7 @@ if(APPLE)
 	find_library(AUDIOUNIT_FRAMEWORK AudioUnit)
 	find_library(COREAUDIO_FRAMEWORK CoreAudio)
 	find_library(COCOA_FRAMEWORK Cocoa)
+	find_library(SYSCONF_FRAMEWORK SystemConfiguration)
 	set(EXTRA_PLATFORM_LIBS
 	    ${XPLM_FRAMEWORK}
 	    ${XPWIDGETS_FRAMEWORK}
@@ -202,6 +203,7 @@ if(APPLE)
 	    ${COCOA_FRAMEWORK}
 	    ${AUDIOUNIT_FRAMEWORK}
 	    ${COREAUDIO_FRAMEWORK}
+		${SYSCONF_FRAMEWORK}
 	    )
 elseif(WIN32)
 	find_library(XPLM_LIBRARY XPLM_64 "${LIBACFUTILS}/SDK/Libraries/Win")

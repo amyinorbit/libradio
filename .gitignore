@@ -1,5 +1,7 @@
 *.class
 *.o
+.DS_Store
+plugin/notarize
 
 src/java/com_vspro_util_RadioModel.h
 src/java/data
