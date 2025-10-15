@@ -61,7 +61,7 @@ Usage: $0 [-nh] -a <libacfutils> -g <opengpws> [-t <buildtype>]
 	-t fjs732 : these are the settings for the FJS 732:
 	    BACKEND=0 : libradio won't just operate as a radio backend
 	    APCTL=0 : libradio will NOT control default X-Plane autopilot
-	    OPENGPWS_CTL=1 : libradio will take charge of controlling OpenGPWS
+	    OPENGPWS_CTL=0 : libradio will take charge of controlling OpenGPWS
 	    DEF_CLAMP=1 : radio deflection datarefs will be clamped
 EOF
 		exit
@@ -98,7 +98,7 @@ q4xp)
     CMAKE_OPTS="-DBACKEND=0 -DAPCTL=0 -DOPENGPWS_CTL=0 -DDEF_CLAMP=1"
     ;;
 fjs732)
-    CMAKE_OPTS="-DBACKEND=0 -DAPCTL=0 -DOPENGPWS_CTL=1 -DDEF_CLAMP=1"
+    CMAKE_OPTS="-DBACKEND=0 -DAPCTL=0 -DOPENGPWS_CTL=0 -DDEF_CLAMP=1"
     ;;
 *)
 	echo "Unknown options value $OPTIONS. See $0 -h for help" >&2
