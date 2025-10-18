@@ -269,6 +269,7 @@ struct radio_s {
 			dr_t	vdef_copilot;
 
 			dr_t	dme_nm;
+			dr_t	dme_valid;
 		} vloc;
 		struct {
 			dr_t	freq;
@@ -277,6 +278,7 @@ struct radio_s {
 		struct {
 			dr_t	freq;
 			dr_t	dme_nm;
+			dr_t	dme_valid;
 		} dme;
 	} drs;
 #endif	/* USE_XPLANE_RADIO_DRS */
@@ -1146,10 +1148,15 @@ ap_radio_drs_config_vloc(radio_t *radio)
 		dr_seti(&radio->drs.vloc.fromto_copilot, 0);
 	}
 
-	if (!isnan(radio->dme))
+	if (!isnan(radio->dme)) {
 		dr_setf(&radio->drs.vloc.dme_nm, MET2NM(radio->dme));
-	else
+		if(dr_writable(&radio->drs.vloc.dme_valid))
+			dr_seti(&radio->drs.vloc.dme_valid, 1);
+	} else {
 		dr_setf(&radio->drs.vloc.dme_nm, 0);
+		if(dr_writable(&radio->drs.vloc.dme_valid))
+			dr_seti(&radio->drs.vloc.dme_valid, 0);
+	}
 
 	if (!isnan(radio->gs) && !isnan(radio->vdef)) {
 		enum { MAX_CORR = 4 };
@@ -1179,10 +1186,15 @@ static void
 ap_radio_drs_config_dme(radio_t *radio)
 {
 	ASSERT3U(radio->type, ==, NAVRAD_TYPE_DME);
-	if (!isnan(radio->dme))
+	if (!isnan(radio->dme)) {
 		dr_setf(&radio->drs.dme.dme_nm, MET2NM(radio->dme));
-	else
+		if(dr_writable(&radio->drs.dme.dme_valid))
+			dr_seti(&radio->drs.dme.dme_valid, 1);
+	} else {
 		dr_setf(&radio->drs.dme.dme_nm, 0);
+		if(dr_writable(&radio->drs.dme.dme_valid))
+			dr_seti(&radio->drs.dme.dme_valid, 0);
+	}
 }
 
 static void
@@ -2082,6 +2094,8 @@ radio_init(radio_t *radio, int nr, navrad_type_t type)
 		    "sim/cockpit/radios/nav%d_vdef_dot2", nr);
 		fdr_find(&radio->drs.vloc.dme_nm,
 		    "sim/cockpit/radios/nav%d_dme_dist_m", nr);
+		fdr_find(&radio->drs.vloc.dme_valid,
+			"sim/cockpit2/radios/indicators/nav%d_has_dme", nr);
 		break;
 	case NAVRAD_TYPE_ADF:
 		fdr_find(&radio->drs.adf.freq,
@@ -2090,6 +2104,8 @@ radio_init(radio_t *radio, int nr, navrad_type_t type)
 		    "sim/cockpit/radios/adf%d_dir_degt", nr);
 		break;
 	case NAVRAD_TYPE_DME:
+		fdr_find(&radio->drs.dme.dme_valid,
+			"sim/cockpit2/radios/indicators/dme_has_dme");
 		fdr_find(&radio->drs.dme.freq,
 		    "sim/cockpit2/radios/actuators/dme_frequency_hz");
 		fdr_find(&radio->drs.dme.dme_nm,
